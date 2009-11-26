@@ -1,9 +1,10 @@
 " Vim syntax file
 " Language:	GNU as (AT&T) assembler for X86
+" Version:      0.5
 " Maintainer:   Rene Koecher <shirk@bitspin.org>
-" Last Change:  2009 Nov 21
+" Last Change:  2009 Nov 26
 " Remark:       Intel compatible instructions only (for now)
-
+"
 if version < 600
 	syntax clear
 elseif exists("b:current_syntax")
@@ -519,11 +520,11 @@ syn match   gasSymbol		"[^; \t()]\+"
 syn match   gasSymbolRef	"\$[^0-9; \t:()]\+"
 
 " constants
-syn region  gasString		start="\""  end="\""
+syn region  gasString		start=/"/  end=/"/ skip=/\\"/
 syn match   gasCharacter	"'\(?\|\\?\)"
 syn match   gasDecimalNumber	"\$\{0,1\}-\{0,1\}\d\+"
 syn match   gasBinaryNumber	"\$\{0,1\}-\{0,1\}0b[01]\+"
-syn match   gasOctalNumber	"\$\{0,1\}-\{0,1\}0\d\+"
+syn match   gasOctalNumber	"\$\{0,1\}-\{0,1\}0[0-7]\+"
 syn match   gasHexNumber	"\$\{0,1\}-\{0,1\}0x\x\+"
 " -- TODO: gasFloatNumber
 
@@ -594,8 +595,20 @@ hi def link gasOpcode		keyword
 
 hi def link gasComment		comment
 
+" support CPP preprocessor tags
+syn case match
+
+syn include @cPP syntax/c.vim
+syn match   cPPLineCont "\\$" contained
+
+syn region  cPPPreProc start=/^\s*#/ end=/$/ contains=@cPP,cPPLineCont
+
+
 " finishing touches
 let b:current_syntax = "gas"
+
+syn sync ccomment
+syn sync linebreaks=1
 
 " vim: ts=8 sw=8 :
 
