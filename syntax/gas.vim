@@ -1,8 +1,8 @@
 " Vim syntax file
 " Language:     GNU as (AT&T) assembler for X86
 " Maintainer:   Rene Koecher <shirk@bitspin.org>
-" Last Change:  2009 Nov 26
-" Version:      0.7
+" Last Change:  2009 Dec 29
+" Version:      0.8
 " Remark:       Intel compatible instructions only (for now)
 
 if version < 600
@@ -79,6 +79,7 @@ syn match   gasLocalLabel	/\d\{1,2\}[:fb]/
 " comments etc.
 syn match   gasOperator		/[+-/*=|&~<>]\|<=\|>=\|<>/
 syn region  gasComment		start=/\/\*/ end=/\*\//
+syn region  gasCommentSingle    start=/#/ end=/$/
 
 " finally: Opcodes
 "
@@ -632,7 +633,7 @@ syn keyword gasOpcode_386_Base		icebp
 syn keyword gasOpcode_X64_Base		idiv
 syn keyword gasOpcode_X64_Base		imul imulb imulw imull imulq
 syn keyword gasOpcode_386_Base		in
-syn keyword gasOpcode_X64_Base		inc
+syn keyword gasOpcode_X64_Base		inc incb incw incl incq
 syn keyword gasOpcode_Base		incbin
 syn keyword gasOpcode_186_Base		insb
 syn keyword gasOpcode_386_Base		insd
@@ -1815,6 +1816,7 @@ hi def link gasLocalLabel	Label
 hi def link gasOperator		Operator
 hi def link gasOpcode		Keyword
 hi def link gasComment		Comment
+hi def link gasCommentSingle	Comment
 
 "-- initial mapping => Keyword
 func! s:MapOpcode (group, cpu, ext)
@@ -1881,7 +1883,7 @@ syn case match
 syn include @cPP syntax/c.vim
 syn match   cPPLineCont "\\$" contained
 
-syn region  cPPPreProc start=/^\s*#/ end=/$/ contains=@cPP,cPPLineCont
+syn region  cPPPreProc start=/^\s*#\s*\(if\|else\|endif\|define\|include\)/ end=/$/ contains=@cPP,cPPLineCont
 
 
 " finishing touches
