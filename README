@@ -8,6 +8,14 @@ common assembler.
 For now the basic as directives as well as the Intel / AMD instruction sets are included.
 Opcodes supporting a size suffix are recognized plain as well as suffixed with b/w/l/q.
 
+== NOTE ON UPDATES
+
+Please note that the whole project is now hosted on github - see https://github.com/Shirk/vim-gas/
+
+
+I will try to keep the latest version available on vim.org however there is no 100% guarantee.
+Github offers the flexibility for everyone to easily participate and help me enhance this project.
+
 == Supported instructions a per version 0.6:
 
 -- X86 common instruction set (8086 - 686)
